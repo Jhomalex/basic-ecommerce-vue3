@@ -14,14 +14,19 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import SearchBox from '@/components/shared/SearchBox.vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   components: { SearchBox },
   setup() {
     const searchText = ref('');
+    const store = useStore();
 
-    watch(searchText, (searchText) => {
-      console.log(searchText);
+    const updateSearchText = (text: string) =>
+      store.commit('updateSearchText', { text });
+
+    watch(searchText, (text) => {
+      updateSearchText(text);
     });
 
     return { searchText };

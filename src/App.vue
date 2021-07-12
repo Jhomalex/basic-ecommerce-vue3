@@ -1,6 +1,6 @@
 <template>
   <navbar />
-  <router-view />
+  <router-view style="padding-top: 6rem" />
 </template>
 
 <script lang="ts">

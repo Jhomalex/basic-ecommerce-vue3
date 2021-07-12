@@ -35,6 +35,7 @@ export default defineComponent({
   margin-left: 1rem;
   font-size: 16px;
   min-width: 40rem;
+  height: 2.75rem;
 }
 
 .search-box {
