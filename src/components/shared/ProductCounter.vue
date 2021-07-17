@@ -1,11 +1,11 @@
 <template>
   <div class="quantity">
-    <button class="plus-btn" type="button" v-on:click="addItem()">
-      <span>+</span>
-    </button>
-    <input type="text" v-bind:value="count" readonly />
     <button class="minus-btn" type="button" @click="reduceItem()">
       <span>-</span>
+    </button>
+    <input type="text" v-bind:value="count" readonly />
+    <button class="plus-btn" type="button" v-on:click="addItem()">
+      <span>+</span>
     </button>
   </div>
 </template>
