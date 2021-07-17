@@ -38,14 +38,11 @@ export default defineComponent({
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .column {
   float: left;
   width: 25%;
   padding: 0 10px;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -87,6 +84,5 @@ body {
 .product-description {
   font-size: 13px;
   color: #5a5a5a;
-  font-family: Arial, Helvetica, sans-serif;
 }
 </style>

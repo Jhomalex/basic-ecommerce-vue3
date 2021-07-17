@@ -56,7 +56,6 @@ export default defineComponent({
 .listing-section {
   width: 100%;
   float: left;
-  padding: 1%;
-  padding-top: 150px;
+  margin-top: 50px;
 }
 </style>
