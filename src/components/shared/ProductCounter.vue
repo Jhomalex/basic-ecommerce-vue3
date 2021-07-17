@@ -31,7 +31,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .quantity {
   padding-top: 20px;
   margin-right: 60px;

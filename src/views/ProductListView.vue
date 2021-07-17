@@ -52,7 +52,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .listing-section {
   width: 100%;
   float: left;
