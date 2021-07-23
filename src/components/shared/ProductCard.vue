@@ -69,6 +69,7 @@ export default defineComponent({
   padding: 16px;
   text-align: center;
   background-color: #ffffff;
+  border-radius: 6px;
 }
 
 .card:hover {
