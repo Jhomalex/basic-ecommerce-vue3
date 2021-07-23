@@ -1,35 +1,47 @@
 <template>
   <div class="navbar">
-    <div class="title">Ecommerce</div>
+    <div class="title" @click="goToProductList()">Ecommerce</div>
     <search-box v-model:search-text="searchText" />
     <div class="navbar-options">
       <button class="account-button">My Account</button>
-      <button class="account-button">
+      <button
+        class="account-button"
+        @click="isOpenShoppingCart = !isOpenShoppingCart"
+      >
         <i class="fas fa-shopping-bag car-button"></i>
       </button>
     </div>
   </div>
+  <shopping-cart-drawer v-model:open="isOpenShoppingCart" />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import SearchBox from '@/components/shared/SearchBox.vue';
+import ShoppingCartDrawer from '@/components/shared/ShoppingCartDrawer.vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  components: { SearchBox },
+  components: { SearchBox, ShoppingCartDrawer },
   setup() {
     const searchText = ref('');
+    const isOpenShoppingCart = ref(false);
     const store = useStore();
+    const router = useRouter();
 
     const updateSearchText = (text: string) =>
       store.commit('updateSearchText', { text });
+
+    const goToProductList = () => {
+      router.push({ name: 'ProductList' });
+    };
 
     watch(searchText, (text) => {
       updateSearchText(text);
     });
 
-    return { searchText };
+    return { searchText, goToProductList, isOpenShoppingCart };
   }
 });
 </script>
@@ -76,5 +88,6 @@ export default defineComponent({
   font-weight: 700;
   color: $text-color;
   margin-left: 2rem;
+  cursor: pointer;
 }
 </style>

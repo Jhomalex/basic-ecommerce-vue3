@@ -52,7 +52,7 @@ export default createStore({
         const res = await getProductByIdService.run(payload.productId);
         switch (res.code) {
           case 'success':
-            commit('updateProduct', res.message);
+            commit('updateProduct', { product: res.message });
             return {
               code: 'success',
               message: 'El producto se encontró'
