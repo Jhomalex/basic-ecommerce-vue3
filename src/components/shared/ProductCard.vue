@@ -4,9 +4,9 @@
       <img class="product-image" v-bind:src="productImage" />
       <div class="container">
         <h4>
-          <b>{{ productPrice }}</b>
+          <b>{{ productDatas.price }}</b>
         </h4>
-        <p class="product-description">{{ productDescription }}</p>
+        <p class="product-description">{{ productDatas.title }}</p>
         <product-counter />
       </div>
     </div>
@@ -20,12 +20,13 @@ import ProductCounter from '@/components/shared/ProductCounter.vue';
 export default defineComponent({
   components: { ProductCounter },
   name: 'ProductCard',
+  props: {
+    productDatas: {
+      type: Array
+    }
+  },
   data() {
     return {
-      productTitle: 'Product Title',
-      productPrice: 'Product Price',
-      productDescription: 'Product Description',
-      productCategory: 'Product Category',
       productImage:
         'https://d1rn6kzjmi8824.cloudfront.net/wp-content/uploads/2020/07/09210135/canned-food1-3.jpg'
     };
@@ -84,5 +85,9 @@ export default defineComponent({
 .product-description {
   font-size: 13px;
   color: #5a5a5a;
+  white-space: nowrap;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

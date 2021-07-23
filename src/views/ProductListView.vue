@@ -1,18 +1,10 @@
 <template>
-  <div class="home">
-    <div
+  <div class="listing-section">
+    <product-card
       v-for="(product, key) in productListFiltered"
       :key="key"
-      style="height: 4rem"
-    >
-      <span>{{ product.title }}</span>
-    </div>
-  </div>
-  <div class="listing-section">
-    <product-card />
-    <product-card />
-    <product-card />
-    <product-card />
+      :productDatas="product"
+    />
   </div>
 </template>
 
