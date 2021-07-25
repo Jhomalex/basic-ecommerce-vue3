@@ -12,6 +12,19 @@
           </button>
         </div>
       </header>
+      <div class="body">
+        <div class="shopping-cart-void">
+          <div class="shopping-cart-void-content">
+            <img src="@/assets/shopping-bag.svg" class="bag-img" />
+            <p class="text-shopping-cart-void">No products in the cart.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="center">
+          <checkout-button />
+        </div>
+      </div>
     </div>
   </div>
   <div class="dimmer" v-if="isOpen"></div>
@@ -19,8 +32,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
+import CheckoutButton from '@/components/shared/CheckoutButton.vue';
 
 export default defineComponent({
+  components: { CheckoutButton },
   name: 'ShoppingCartDrawer',
   props: { open: Boolean },
   emits: ['update:open'],
@@ -96,6 +111,37 @@ export default defineComponent({
   .close-icon {
     font-size: 16px !important;
     margin-left: 1rem;
+  }
+}
+.body {
+  height: 80%;
+  width: 100%;
+  display: flex;
+}
+.shopping-cart-void {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.bag-img {
+  padding: 0px 8.4rem;
+}
+.text-shopping-cart-void {
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: $text-color;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0px;
+  height: 90px;
+  width: 100%;
+  .center {
+    margin: 0 auto;
   }
 }
 </style>
