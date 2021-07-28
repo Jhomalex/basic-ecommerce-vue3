@@ -13,11 +13,14 @@
         </div>
       </header>
       <div class="body">
-        <div class="shopping-cart-void">
+        <div v-if="isVoid" class="shopping-cart-void">
           <div class="shopping-cart-void-content">
             <img src="@/assets/shopping-bag.svg" class="bag-img" />
             <p class="text-shopping-cart-void">No products in the cart.</p>
           </div>
+        </div>
+        <div v-else class="shopping-cart">
+          <shopping-cart-item />
         </div>
       </div>
       <div class="footer">
@@ -31,21 +34,27 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import CheckoutButton from '@/components/shared/CheckoutButton.vue';
+import { computed, defineComponent, ref } from 'vue';
+import CheckoutButton from '@/components/shared/ShoppingCardDrawer/components/CheckoutButton.vue';
+import ShoppingCartItem from '@/components/shared/ShoppingCardDrawer/components/ShoppingCartItem.vue';
+import { Product } from '@/core/entities/Product';
 
 export default defineComponent({
-  components: { CheckoutButton },
+  components: { CheckoutButton, ShoppingCartItem },
   name: 'ShoppingCartDrawer',
   props: { open: Boolean },
   emits: ['update:open'],
   setup(props, { emit }) {
+    const products = ref([
+      { id: 1, title: '', price: 10, description: '', category: '', image: '' }
+    ] as Product[]);
     const isOpen = computed(() => props.open);
+    const isVoid = computed(() => products.value.length === 0);
     const close = () => {
       emit('update:open', false);
     };
 
-    return { isOpen, close };
+    return { isOpen, isVoid, close, products };
   }
 });
 </script>
@@ -123,6 +132,9 @@ export default defineComponent({
   height: 100%;
   display: flex;
   align-items: center;
+}
+.shopping-cart {
+  width: 100%;
 }
 .bag-img {
   padding: 0px 8.4rem;

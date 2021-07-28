@@ -29,7 +29,7 @@ export default defineComponent({
   width: 370px;
   border-radius: 6px;
   color: #ffffff;
-  padding: 1.2rem 3rem;
+  padding: 1.2rem 3rem 1.2rem 0rem;
   border: 0px;
   display: flex;
   font-size: 16px;
@@ -59,7 +59,7 @@ export default defineComponent({
   width: 370px;
   border-radius: 6px;
   color: #ffffff;
-  padding: 1.2rem 3rem;
+  padding: 1.2rem 3rem 1.2rem 0rem;
   border: 0px;
   display: flex;
   font-size: 16px;
