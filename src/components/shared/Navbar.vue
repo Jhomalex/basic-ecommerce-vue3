@@ -12,6 +12,7 @@
         @click="isOpenShoppingCart = !isOpenShoppingCart"
       >
         <i class="fas fa-shopping-bag car-button"></i>
+        <span>{{ shoppingCartCounter }}</span>
       </button>
     </div>
   </div>
@@ -19,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import SearchBox from '@/components/shared/SearchBox.vue';
 import ShoppingCartDrawer from '@/components/shared/ShoppingCardDrawer/ShoppingCartDrawer.vue';
 import { useStore } from 'vuex';
@@ -33,6 +34,8 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
+    const shoppingCartCounter = computed(() => store.getters.shoppingCartCount);
+
     const updateSearchText = (text: string) =>
       store.commit('updateSearchText', { text });
 
@@ -44,7 +47,12 @@ export default defineComponent({
       updateSearchText(text);
     });
 
-    return { searchText, goToProductList, isOpenShoppingCart };
+    return {
+      searchText,
+      goToProductList,
+      isOpenShoppingCart,
+      shoppingCartCounter
+    };
   }
 });
 </script>

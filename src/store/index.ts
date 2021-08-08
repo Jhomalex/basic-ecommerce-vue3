@@ -10,7 +10,13 @@ export default createStore({
   state: {
     productList: [] as Product[],
     productDetailed: {} as Product,
+    productShoppingCartList: [] as Product[],
     searchText: ''
+  },
+  getters: {
+    shoppingCartCount(state) {
+      return state.productShoppingCartList.length;
+    }
   },
   mutations: {
     updateProductList(state, payload: { products: Product[] }) {
@@ -21,6 +27,18 @@ export default createStore({
     },
     updateSearchText(state, payload: { text: string }) {
       state.searchText = payload.text;
+    },
+    addProductInShoppingCart(
+      state,
+      payload: { product: Product; quantity: number }
+    ) {
+      state.productShoppingCartList.push(payload.product);
+    },
+    removeProductOfShoppingCart(state, payload: { product: Product }) {
+      const idx = state.productShoppingCartList.findIndex(
+        (p) => p.id === payload.product.id
+      );
+      state.productShoppingCartList.splice(idx, 1);
     }
   },
   actions: {
