@@ -22,7 +22,7 @@ export default defineComponent({
   name: 'ProductCard',
   props: {
     productDatas: {
-      type: Array
+      type: Object
     }
   },
   data() {

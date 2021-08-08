@@ -13,16 +13,27 @@
         </div>
       </header>
       <div class="body">
-        <div class="shopping-cart-void">
+        <div v-if="isVoid" class="shopping-cart-void">
           <div class="shopping-cart-void-content">
             <img src="@/assets/shopping-bag.svg" class="bag-img" />
             <p class="text-shopping-cart-void">No products in the cart.</p>
           </div>
         </div>
+        <div v-else class="shopping-cart">
+          <shopping-cart-item
+            v-for="(product, key) in products"
+            :key="key"
+            :id="product.id"
+            :image="product.image"
+            :name="product.title"
+            :quantity="product.quantity"
+            :unitPrice="product.price"
+          />
+        </div>
       </div>
       <div class="footer">
         <div class="center">
-          <checkout-button />
+          <checkout-button :enabled="!isVoid" />
         </div>
       </div>
     </div>
@@ -31,21 +42,36 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import CheckoutButton from '@/components/shared/CheckoutButton.vue';
+import { computed, defineComponent, ref } from 'vue';
+import CheckoutButton from '@/components/shared/ShoppingCardDrawer/components/CheckoutButton.vue';
+import ShoppingCartItem from '@/components/shared/ShoppingCardDrawer/components/ShoppingCartItem.vue';
+import { Product } from '@/core/entities/Product';
 
 export default defineComponent({
-  components: { CheckoutButton },
+  components: { CheckoutButton, ShoppingCartItem },
   name: 'ShoppingCartDrawer',
   props: { open: Boolean },
   emits: ['update:open'],
   setup(props, { emit }) {
+    const products = ref([
+      {
+        id: 1,
+        title: 'Galletas Santa Verónica',
+        price: 10,
+        description: 'Galletas de vainilla con chispas de chocolate',
+        category: 'cookies',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU_l3zvV6aCPVOx93YWaukVVAUTCKedJoVYoSPKs5VyEXocxqScDBJZSc0IqASoTVS6ps&usqp=CAU',
+        quantity: 1
+      }
+    ] as (Product & { quantity: number })[]);
     const isOpen = computed(() => props.open);
+    const isVoid = computed(() => products.value.length === 0);
     const close = () => {
       emit('update:open', false);
     };
 
-    return { isOpen, close };
+    return { isOpen, isVoid, close, products };
   }
 });
 </script>
@@ -123,6 +149,9 @@ export default defineComponent({
   height: 100%;
   display: flex;
   align-items: center;
+}
+.shopping-cart {
+  width: 100%;
 }
 .bag-img {
   padding: 0px 8.4rem;

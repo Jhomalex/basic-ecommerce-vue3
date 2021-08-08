@@ -1,6 +1,9 @@
 <template>
   <div class="navbar">
-    <div class="title" @click="goToProductList()">Ecommerce</div>
+    <div class="title" @click="goToProductList()">
+      <img src="@/assets/logo.png" height="50" />
+      <span class="text">Ecommerce</span>
+    </div>
     <search-box v-model:search-text="searchText" />
     <div class="navbar-options">
       <button class="account-button">My Account</button>
@@ -18,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import SearchBox from '@/components/shared/SearchBox.vue';
-import ShoppingCartDrawer from '@/components/shared/ShoppingCartDrawer.vue';
+import ShoppingCartDrawer from '@/components/shared/ShoppingCardDrawer/ShoppingCartDrawer.vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -84,10 +87,15 @@ export default defineComponent({
 }
 
 .title {
+  display: flex;
+  align-items: center;
   font-size: 20px;
   font-weight: 700;
   color: $text-color;
   margin-left: 2rem;
   cursor: pointer;
+  .text {
+    margin-left: 5px;
+  }
 }
 </style>
