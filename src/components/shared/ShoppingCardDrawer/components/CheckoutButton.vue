@@ -13,11 +13,9 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'CheckoutButton',
+  props: { enabled: { type: Boolean, default: false } },
   setup() {
-    const enabled = false;
-    return {
-      enabled
-    };
+    return {};
   }
 });
 </script>

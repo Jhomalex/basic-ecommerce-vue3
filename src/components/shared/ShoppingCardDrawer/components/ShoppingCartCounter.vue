@@ -54,4 +54,8 @@ export default defineComponent({
     font-size: 10px;
   }
 }
+.action-button:hover {
+  background-color: rgb(41, 41, 41);
+  border-radius: 7px;
+}
 </style>

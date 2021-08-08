@@ -2,34 +2,37 @@
   <div class="container">
     <div class="image-container">
       <i class="fas fa-times-circle image-close-icon"></i>
-      <img
-        height="90"
-        width="90"
-        class="image"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU_l3zvV6aCPVOx93YWaukVVAUTCKedJoVYoSPKs5VyEXocxqScDBJZSc0IqASoTVS6ps&usqp=CAU"
-      />
+      <img height="90" width="90" class="image" :src="image" />
     </div>
     <div class="content">
-      <span class="product-name">Galletas Don Vitorio</span>
-      <span class="product-price">Unit Price: 20$</span>
+      <span class="product-name" v-text="name" />
+      <span class="product-price" v-text="`Unit Price: ${unitPrice}$`" />
       <div class="counter-and-price">
-        <shopping-cart-counter v-model:counter="quantity" />
-        <span class="price">$2.00</span>
+        <shopping-cart-counter v-model:counter="localQuantity" />
+        <span class="price" v-text="`${amount}$`" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import ShoppingCartCounter from '@/components/shared/ShoppingCardDrawer/components/ShoppingCartCounter.vue';
 
 export default defineComponent({
   name: 'ShoppingCartItem',
   components: { ShoppingCartCounter },
-  setup() {
-    let quantity = ref(0);
-    return { quantity };
+  props: {
+    id: { type: Number, required: true },
+    image: { type: String, required: true },
+    name: { type: String, required: true },
+    unitPrice: { type: Number, required: true },
+    quantity: { type: Number, required: true }
+  },
+  setup(props) {
+    let localQuantity = ref(props.quantity);
+    const amount = computed(() => localQuantity.value * props.unitPrice);
+    return { localQuantity, amount };
   }
 });
 </script>

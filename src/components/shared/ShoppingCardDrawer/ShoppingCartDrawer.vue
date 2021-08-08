@@ -20,12 +20,20 @@
           </div>
         </div>
         <div v-else class="shopping-cart">
-          <shopping-cart-item />
+          <shopping-cart-item
+            v-for="(product, key) in products"
+            :key="key"
+            :id="product.id"
+            :image="product.image"
+            :name="product.title"
+            :quantity="product.quantity"
+            :unitPrice="product.price"
+          />
         </div>
       </div>
       <div class="footer">
         <div class="center">
-          <checkout-button />
+          <checkout-button :enabled="!isVoid" />
         </div>
       </div>
     </div>
@@ -46,8 +54,17 @@ export default defineComponent({
   emits: ['update:open'],
   setup(props, { emit }) {
     const products = ref([
-      { id: 1, title: '', price: 10, description: '', category: '', image: '' }
-    ] as Product[]);
+      {
+        id: 1,
+        title: 'Galletas Santa Verónica',
+        price: 10,
+        description: 'Galletas de vainilla con chispas de chocolate',
+        category: 'cookies',
+        image:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU_l3zvV6aCPVOx93YWaukVVAUTCKedJoVYoSPKs5VyEXocxqScDBJZSc0IqASoTVS6ps&usqp=CAU',
+        quantity: 1
+      }
+    ] as (Product & { quantity: number })[]);
     const isOpen = computed(() => props.open);
     const isVoid = computed(() => products.value.length === 0);
     const close = () => {
