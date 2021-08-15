@@ -5,13 +5,16 @@
       <span class="text">Ecommerce</span>
     </div>
     <search-box v-model:search-text="searchText" />
-    <div class="navbar-options">
-      <button class="account-button">My Account</button>
+    <div class="navbar-right-menu">
+      <button class="navbar-options">My Account</button>
       <button
-        class="account-button"
+        class="navbar-options"
         @click="isOpenShoppingCart = !isOpenShoppingCart"
       >
-        <i class="fas fa-shopping-bag car-button"></i>
+        <div class="cart-item-badge">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="count">{{ shoppingCartCounter }}</span>
+        </div>
       </button>
     </div>
   </div>
@@ -19,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, watch, computed } from 'vue';
 import SearchBox from '@/components/shared/SearchBox.vue';
 import ShoppingCartDrawer from '@/components/shared/ShoppingCardDrawer/ShoppingCartDrawer.vue';
 import { useStore } from 'vuex';
@@ -40,11 +43,18 @@ export default defineComponent({
       router.push({ name: 'ProductList' });
     };
 
+    const shoppingCartCounter = computed(() => store.getters.shoppingCartCount);
+
     watch(searchText, (text) => {
       updateSearchText(text);
     });
 
-    return { searchText, goToProductList, isOpenShoppingCart };
+    return {
+      searchText,
+      goToProductList,
+      isOpenShoppingCart,
+      shoppingCartCounter
+    };
   }
 });
 </script>
@@ -67,23 +77,18 @@ export default defineComponent({
   top: 0rem;
 }
 
-.navbar-options {
+.navbar-right-menu {
   display: flex;
   margin-right: 2rem;
 }
 
-.account-button {
+.navbar-options {
   background-color: white;
   border: 0rem;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
   color: $text-color;
-}
-
-.car-button {
-  font-size: 20px !important;
-  margin-left: 1rem;
 }
 
 .title {
@@ -97,5 +102,28 @@ export default defineComponent({
   .text {
     margin-left: 5px;
   }
+}
+
+.cart-item-badge {
+  font-size: 22px !important;
+  margin-left: 1rem;
+  position: relative;
+  padding: 10px;
+}
+
+.cart-item-badge .count {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: tomato;
+  position: absolute;
+  color: #ffffff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  top: 5px;
+  right: -0px;
 }
 </style>

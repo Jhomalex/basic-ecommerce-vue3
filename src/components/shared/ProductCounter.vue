@@ -22,19 +22,27 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapMutations } from 'vuex';
 
 export default defineComponent({
   name: 'ProductCounter',
+  props: { product: Object },
   data() {
     return {
       count: 0
     };
   },
   methods: {
+    ...mapMutations({
+      addProductInShoppingCart: 'addProductInShoppingCart',
+      removeProductInShoppingCart: 'removeProductInShoppingCart'
+    }),
     addItem() {
+      this.addProductInShoppingCart({ product: this.product });
       return this.count++;
     },
     reduceItem() {
+      this.removeProductInShoppingCart({ product: this.product });
       if (this.count !== 0) return this.count--;
     }
   }

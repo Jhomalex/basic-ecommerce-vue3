@@ -7,7 +7,7 @@
           <b>{{ productDatas.price }}</b>
         </h4>
         <p class="product-description">{{ productDatas.title }}</p>
-        <product-counter />
+        <product-counter :product="productDatas" />
       </div>
     </div>
   </div>
