@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import ShoppingCartCounter from '@/components/shared/ShoppingCardDrawer/components/ShoppingCartCounter.vue';
 
 export default defineComponent({
@@ -31,6 +31,11 @@ export default defineComponent({
   },
   setup(props) {
     let localQuantity = ref(props.quantity);
+
+    watch(props, (newVal) => {
+      localQuantity.value = newVal.quantity;
+    });
+
     const amount = computed(() => localQuantity.value * props.unitPrice);
     return { localQuantity, amount };
   }
