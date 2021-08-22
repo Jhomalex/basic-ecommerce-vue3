@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import { Product } from '@/core/entities/Product';
+import { ProductShoppingCart } from '@/core/entities/ProductShoppingCart';
 import {
   getProductByIdService,
   listProductService
@@ -10,12 +11,23 @@ export default createStore({
   state: {
     productList: [] as Product[],
     productDetailed: {} as Product,
-    productShoppingCartList: [] as Product[],
+    productShoppingCartList: [] as ProductShoppingCart[],
     searchText: '',
   },
   getters: {
     shoppingCartCount(state) {
       return state.productShoppingCartList.length;
+    },
+    shoppingBagCount(state) {
+      let count = 0;
+      const productShoppingCartList = state.productShoppingCartList;
+      productShoppingCartList.forEach(element => {
+        count += element.quantity;
+      });
+      return count;
+    },
+    shoppingCartList(state) {
+      return state.productShoppingCartList;
     }
   },
   mutations: {
@@ -28,14 +40,32 @@ export default createStore({
     updateSearchText(state, payload: { text: string }) {
       state.searchText = payload.text;
     },
-    addProductInShoppingCart(state, payload: { product: Product, quantity:number }) {
-      state.productShoppingCartList.push(payload.product);
+    addProductInShoppingCart(state, payload: { product: Product, quantity: number}) {
+      const newProduct = {
+        product: payload.product,
+        quantity: payload.quantity,
+      } as ProductShoppingCart;
+
+      const addProductQuantity = () => {
+        const foundProductId = state.productShoppingCartList.findIndex((currentProduct) => {
+          return (currentProduct.product.id === payload.product.id) ? currentProduct.quantity = payload.quantity : '';
+        });
+
+        if(foundProductId < 0) 
+        {
+          state.productShoppingCartList.push(newProduct);
+        }
+      };
+
+      (state.productShoppingCartList.length <= 0) ? state.productShoppingCartList.push(newProduct) : addProductQuantity();
     },
     removeProductInShoppingCart(state, payload: { product: Product }) {
-      const id = state.productShoppingCartList.findIndex(
-        (p) => p.id === payload.product.id
-      );
-      state.productShoppingCartList.splice(id, 1);
+      state.productShoppingCartList.findIndex((currentProduct, id) => {
+        if (currentProduct.product.id === payload.product.id) 
+        {
+          return currentProduct.quantity != 1 ? currentProduct.quantity-- : state.productShoppingCartList.splice(id, 1);
+        }
+      });
     }
   },
   actions: {

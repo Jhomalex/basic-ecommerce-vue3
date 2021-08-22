@@ -21,13 +21,13 @@
         </div>
         <div v-else class="shopping-cart">
           <shopping-cart-item
-            v-for="(product, key) in products"
+            v-for="(shoppingCart, key) in shoppingCartList"
             :key="key"
-            :id="product.id"
-            :image="product.image"
-            :name="product.title"
-            :quantity="product.quantity"
-            :unitPrice="product.price"
+            :id="shoppingCart.product.id"
+            :image="shoppingCart.product.image"
+            :name="shoppingCart.product.title"
+            :quantity="shoppingCart.quantity"
+            :unitPrice="shoppingCart.product.price"
           />
         </div>
       </div>
@@ -42,10 +42,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 import CheckoutButton from '@/components/shared/ShoppingCardDrawer/components/CheckoutButton.vue';
 import ShoppingCartItem from '@/components/shared/ShoppingCardDrawer/components/ShoppingCartItem.vue';
-import { Product } from '@/core/entities/Product';
 
 export default defineComponent({
   components: { CheckoutButton, ShoppingCartItem },
@@ -53,25 +53,16 @@ export default defineComponent({
   props: { open: Boolean },
   emits: ['update:open'],
   setup(props, { emit }) {
-    const products = ref([
-      {
-        id: 1,
-        title: 'Galletas Santa Verónica',
-        price: 10,
-        description: 'Galletas de vainilla con chispas de chocolate',
-        category: 'cookies',
-        image:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU_l3zvV6aCPVOx93YWaukVVAUTCKedJoVYoSPKs5VyEXocxqScDBJZSc0IqASoTVS6ps&usqp=CAU',
-        quantity: 1
-      }
-    ] as (Product & { quantity: number })[]);
+    const store = useStore();
+    const shoppingCartCount = computed(() => store.getters.shoppingCartCount);
+    const shoppingCartList = computed(() => store.getters.shoppingCartList);
     const isOpen = computed(() => props.open);
-    const isVoid = computed(() => products.value.length === 0);
+    const isVoid = computed(() => shoppingCartCount.value === 0);
     const close = () => {
       emit('update:open', false);
     };
 
-    return { isOpen, isVoid, close, products };
+    return { isOpen, isVoid, close, shoppingCartList };
   }
 });
 </script>

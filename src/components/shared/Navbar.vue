@@ -13,7 +13,7 @@
       >
         <div class="cart-item-badge">
           <i class="fas fa-shopping-bag"></i>
-          <span class="count">{{ shoppingCartCounter }}</span>
+          <span class="count">{{ shoppingBagCounter }}</span>
         </div>
       </button>
     </div>
@@ -43,7 +43,7 @@ export default defineComponent({
       router.push({ name: 'ProductList' });
     };
 
-    const shoppingCartCounter = computed(() => store.getters.shoppingCartCount);
+    const shoppingBagCounter = computed(() => store.getters.shoppingBagCount);
 
     watch(searchText, (text) => {
       updateSearchText(text);
@@ -53,7 +53,7 @@ export default defineComponent({
       searchText,
       goToProductList,
       isOpenShoppingCart,
-      shoppingCartCounter
+      shoppingBagCounter
     };
   }
 });

@@ -38,8 +38,11 @@ export default defineComponent({
       removeProductInShoppingCart: 'removeProductInShoppingCart'
     }),
     addItem() {
-      this.addProductInShoppingCart({ product: this.product });
-      return this.count++;
+      this.count++;
+      this.addProductInShoppingCart({
+        product: this.product,
+        quantity: this.count
+      });
     },
     reduceItem() {
       this.removeProductInShoppingCart({ product: this.product });
