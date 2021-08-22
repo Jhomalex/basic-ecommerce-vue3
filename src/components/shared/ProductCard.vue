@@ -1,10 +1,14 @@
 <template>
   <div class="column">
     <div class="card">
-      <img class="product-image" v-bind:src="productImage" />
+      <img
+        class="product-image"
+        v-bind:src="productDatas.image"
+        @click="go('ProductDetail', { productId: productDatas.id })"
+      />
       <div class="container">
         <h4>
-          <b>{{ productDatas.price }}</b>
+          <b>{{ productDatas.price }} USD</b>
         </h4>
         <p class="product-description">{{ productDatas.title }}</p>
         <product-counter />
@@ -25,11 +29,10 @@ export default defineComponent({
       type: Object
     }
   },
-  data() {
-    return {
-      productImage:
-        'https://d1rn6kzjmi8824.cloudfront.net/wp-content/uploads/2020/07/09210135/canned-food1-3.jpg'
-    };
+  methods: {
+    go(routeName: string, params: Record<string, string>) {
+      this.$router.push({ name: routeName, params });
+    }
   }
 });
 </script>
@@ -77,10 +80,13 @@ export default defineComponent({
 }
 
 .product-image {
+  object-fit: contain;
   width: 60%;
+  height: 200px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
 }
 
 .product-description {

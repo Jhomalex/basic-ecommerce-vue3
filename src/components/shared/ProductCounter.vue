@@ -14,7 +14,7 @@
     :style="[count !== 0 ? { display: 'none' } : { display: '' }]"
   >
     <span class="product-card-cart-button add-product" @click="addItem()">
-      <span class="label">Agrgar</span>
+      <span class="label">Add to cart</span>
       <span class="icon icon-product-add">+</span>
     </span>
   </div>
