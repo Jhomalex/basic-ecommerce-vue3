@@ -12,7 +12,7 @@ export default createStore({
     productList: [] as Product[],
     productDetailed: {} as Product,
     productShoppingCartList: [] as ProductShoppingCart[],
-    searchText: '',
+    searchText: ''
   },
   getters: {
     shoppingCartCount(state) {
@@ -21,7 +21,7 @@ export default createStore({
     shoppingBagCount(state) {
       let count = 0;
       const productShoppingCartList = state.productShoppingCartList;
-      productShoppingCartList.forEach(element => {
+      productShoppingCartList.forEach((element) => {
         count += element.quantity;
       });
       return count;
@@ -40,30 +40,39 @@ export default createStore({
     updateSearchText(state, payload: { text: string }) {
       state.searchText = payload.text;
     },
-    addProductInShoppingCart(state, payload: { product: Product, quantity: number}) {
+    addProductInShoppingCart(
+      state,
+      payload: { product: Product; quantity: number }
+    ) {
       const newProduct = {
         product: payload.product,
-        quantity: payload.quantity,
+        quantity: payload.quantity
       } as ProductShoppingCart;
 
       const addProductQuantity = () => {
-        const foundProductId = state.productShoppingCartList.findIndex((currentProduct) => {
-          return (currentProduct.product.id === payload.product.id) ? currentProduct.quantity = payload.quantity : '';
-        });
+        const foundProductId = state.productShoppingCartList.findIndex(
+          (currentProduct) => {
+            return currentProduct.product.id === payload.product.id
+              ? (currentProduct.quantity = payload.quantity)
+              : '';
+          }
+        );
 
-        if(foundProductId < 0) 
-        {
+        if (foundProductId < 0) {
           state.productShoppingCartList.push(newProduct);
         }
       };
 
-      (state.productShoppingCartList.length <= 0) ? state.productShoppingCartList.push(newProduct) : addProductQuantity();
+      state.productShoppingCartList.length <= 0
+        ? state.productShoppingCartList.push(newProduct)
+        : addProductQuantity();
     },
     removeProductInShoppingCart(state, payload: { product: Product }) {
       state.productShoppingCartList.findIndex((currentProduct, id) => {
-        if (currentProduct.product.id === payload.product.id) 
-        {
-          return currentProduct.quantity != 1 ? currentProduct.quantity-- : state.productShoppingCartList.splice(id, 1);
+        if (currentProduct.product.id === payload.product.id) {
+          return currentProduct.quantity != 1
+            ? currentProduct.quantity--
+            : state.productShoppingCartList.splice(id, 1);
         }
       });
     }
@@ -91,7 +100,7 @@ export default createStore({
 
     async getProductById(
       { commit },
-      payload: { productId: number }
+      payload: { productId: string }
     ): Promise<InternalResponse> {
       try {
         const res = await getProductByIdService.run(payload.productId);

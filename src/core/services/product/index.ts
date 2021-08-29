@@ -1,4 +1,4 @@
-import { ProductRepository } from '@/dataSources/local/ProductRepository';
+import { ProductRepository } from '@/dataSources/firebase/ProductRepository';
 import { ListProductsService } from './ListProductsService';
 import { GetProductByIdService } from './GetProductByIdService';
 

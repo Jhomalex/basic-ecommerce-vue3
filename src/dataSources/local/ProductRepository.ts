@@ -14,7 +14,7 @@ export class ProductRepository implements IProductRepository {
   }
 
   async getById(
-    productId: number
+    productId: string
   ): Promise<Invalid | Error | Success<Product>> {
     try {
       const res = JSON.parse(JSON.stringify(json)) as { default: Product[] };
