@@ -23,7 +23,7 @@ export default defineComponent({
   name: 'ShoppingCartItem',
   components: { ShoppingCartCounter },
   props: {
-    id: { type: Number, required: true },
+    id: { type: String, required: true },
     image: { type: String, required: true },
     name: { type: String, required: true },
     unitPrice: { type: Number, required: true },

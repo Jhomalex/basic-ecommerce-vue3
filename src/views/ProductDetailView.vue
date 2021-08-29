@@ -38,12 +38,12 @@ export default defineComponent({
     const route = useRoute();
     const store = useStore();
 
-    const productId = parseInt(route.params.productId as string);
+    const productId = route.params.productId as string;
 
     const productDetailed = computed(
       () => store.state.productDetailed as Product
     );
-    const getProductData = (productId: number): Promise<InternalResponse> =>
+    const getProductData = (productId: string): Promise<InternalResponse> =>
       store.dispatch('getProductById', { productId });
 
     onMounted(() => {
